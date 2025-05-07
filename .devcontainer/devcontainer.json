@@ -1,7 +1,35 @@
+// {
+//     "name": "Python Development Environment",
+//     "build": {
+//         // Path is relative to the devcontainer.json file.
+//         "dockerfile": "Dockerfile"
+//     }
+// }
+
 {
-    "name": "Python Development Environment",
+    "name": "python-uv",
     "build": {
-        // Path is relative to the devcontainer.json file.
-        "dockerfile": "Dockerfile"
-    }
+        "context": "..",
+        "dockerfile": "Dockerfile",
+        "args": {
+            "UV_VER": "0.5.5",
+            "DEBIAN_VER": "bookworm"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "charliermarsh.ruff",
+                "kevinrose.vsc-python-indent",
+                "ms-python.python"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "dummy",
+        "PYTHONUNBUFFERED": "True",
+        "UV_LINK_MODE": "copy",
+        "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venv"
+    },
+    "remoteUser": "vscode"
 }
