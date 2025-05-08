@@ -1,11 +1,21 @@
-# FROM python:3.12-slim-bookworm
-# COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+FROM python:3.12-slim-bookworm AS base
+FROM base AS builder
 
+COPY --from=ghcr.io/astral-sh/uv:0.4.9 /uv /bin/uv
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+WORKDIR /app
 
-ARG UV_VER=0.5.5
-ARG DEBIAN_VER=bookworm
+COPY uv.lock pyproject.toml /app/
+RUN --mount=type=cache,target=/root/.cache/uv \
+  uv sync --frozen --no-install-project --no-dev
 
-FROM ghcr.io/astral-sh/uv:$UV_VER AS uv
-FROM mcr.microsoft.com/vscode/devcontainers/base:$DEBIAN_VER
+COPY . /app
+RUN --mount=type=cache,target=/root/.cache/uv \
+  uv sync --frozen --no-dev
+FROM base
 
-COPY --from=uv --chown=vscode: /uv /uvx /bin/
+COPY --from=builder /app /app
+ENV PATH="/app/.venv/bin:$PATH"
+EXPOSE 8000
+CMD ["uvicorn", "uv_docker_example:app", "--host", "0.0.0.0", "--port", "8000"]
+
