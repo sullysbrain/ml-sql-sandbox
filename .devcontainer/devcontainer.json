@@ -1,21 +1,16 @@
 {
-    "name": "py-analysis",
-    "build": { "dockerfile": "Dockerfile" }
-  
-    // Forward Jupyter Lab
-    // "forwardPorts": [8888],
-  
-    // Editor UX only
-    // "customizations": {
-    //   "vscode": {
-    //     "extensions": [
-    //       "ms-python.python",
-    //       "ms-toolsai.jupyter"
-    //     ]
-    //   }
-    // },
-  
-    // One‑off check after the container is built
-    // "postCreateCommand": "uv pip check"
+  "name": "py-analysis",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/app",
+  "runArgs": [
+    "--mount",
+    "type=bind,source=${localWorkspaceFolder},target=/app"
+  ],
+  "customizations": {
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "zsh"
+    }
   }
-  
+}

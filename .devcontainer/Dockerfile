@@ -1,21 +1,27 @@
-FROM python:3.12-slim-bookworm AS base
-FROM base AS builder
 
-COPY --from=ghcr.io/astral-sh/uv:0.4.9 /uv /bin/uv
-ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+# Debian 12, Linux 6.1, Python 3.12
+FROM python:3.12-slim-bookworm AS base
+# FROM --platform=linux/amd64 python:3.12-slim-bookworm AS base
+
 WORKDIR /app
 
-COPY uv.lock pyproject.toml /app/
-RUN --mount=type=cache,target=/root/.cache/uv \
-  uv sync --frozen --no-install-project --no-dev
+FROM base AS builder
+# 2. Install system-level packages (zsh, ODBC drivers, etc.)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends zsh && \
+    rm -rf /var/lib/apt/lists/*
+    
 
-COPY . /app
-RUN --mount=type=cache,target=/root/.cache/uv \
-  uv sync --frozen --no-dev
-FROM base
+# Optional: set zsh as the default shell
+SHELL ["/bin/zsh", "-c"]
 
-COPY --from=builder /app /app
-ENV PATH="/app/.venv/bin:$PATH"
-EXPOSE 8000
-CMD ["uvicorn", "uv_docker_example:app", "--host", "0.0.0.0", "--port", "8000"]
+# Optional: set the CMD to start zsh by default
+CMD ["zsh"]
+
+
+COPY --from=ghcr.io/astral-sh/uv:0.4.9 /uv /bin/uv
+# RUN curl -sSf https://install.astral.sh | sh
+# COPY pyproject.toml uv.lock ./
+# ENV UV_LINK_MODE=copy
+# RUN uv pip sync --system
 
