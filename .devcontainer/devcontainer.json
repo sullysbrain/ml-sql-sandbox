@@ -4,5 +4,9 @@
     "context": "..",
     "dockerfile": "Dockerfile"
   },
-  "runArgs": ["--name=my-analytics"]
+  "runArgs": ["--name=my-analytics"],
+  "workspaceFolder": "/app",
+  "mounts": [
+    "source=${localWorkspaceFolder}/src,target=/app/src,type=bind,consistency=cached"
+  ]
 }
