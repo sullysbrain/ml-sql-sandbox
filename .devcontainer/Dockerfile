@@ -1,27 +1,36 @@
 
 # Debian 12, Linux 6.1, Python 3.12
 FROM python:3.12-slim-bookworm AS base
-# FROM --platform=linux/amd64 python:3.12-slim-bookworm AS base
+# FROM ubuntu:noble AS build
 
+
+#Change shell to sh for small size and set debug options
+SHELL ["sh", "-exc"]
+
+# Ensure apt-get doesn't open a menu on you.
+# ENV USER=uv-example-user \
+# ENV APP_DIR=/app
 WORKDIR /app
 
-FROM base AS builder
-# 2. Install system-level packages (zsh, ODBC drivers, etc.)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends zsh && \
-    rm -rf /var/lib/apt/lists/*
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_PROJECT_ENVIRONMENT=/usr/local
     
+### Start build prep.
+### This should be a separate build container for better reuse.
 
-# Optional: set zsh as the default shell
-SHELL ["/bin/zsh", "-c"]
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+    # && useradd -m -s /bin/bash $USER
 
-# Optional: set the CMD to start zsh by default
-CMD ["zsh"]
 
+COPY --from=ghcr.io/astral-sh/uv:0.5.5 /uv /uvx /bin/
 
-COPY --from=ghcr.io/astral-sh/uv:0.4.9 /uv /bin/uv
-# RUN curl -sSf https://install.astral.sh | sh
-# COPY pyproject.toml uv.lock ./
-# ENV UV_LINK_MODE=copy
-# RUN uv pip sync --system
+COPY src .
+# ENV PYTHONPATH=$APP_DIR
 
+COPY ./pyproject.toml ./uv.lock ./
+RUN uv pip install -r pyproject.toml --system

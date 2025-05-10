@@ -1,0 +1,21 @@
+# Virtual environments
+.venv
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+
+# OS files
+.DS_Store
+
+# Git stuff
+.git
+.gitignore
+
+# Notebooks
+.ipynb_checkpoints
+
+# IDE files
+.vscode/
+.idea/

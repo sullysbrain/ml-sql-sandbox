@@ -3,6 +3,5 @@ name = "analysis-stack"
 version = "0.1.0"
 
 dependencies = [
-  "pandas>=2.2,<3.0",
-  "jupyterlab>=4.2,<5.0"
+  "pandas>=2.2,<3.0"
 ]

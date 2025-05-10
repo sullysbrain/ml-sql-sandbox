@@ -1,16 +1,8 @@
 {
   "name": "py-analysis",
   "build": {
+    "context": "..",
     "dockerfile": "Dockerfile"
   },
-  "workspaceFolder": "/app",
-  "runArgs": [
-    "--mount",
-    "type=bind,source=${localWorkspaceFolder},target=/app"
-  ],
-  "customizations": {
-    "settings": {
-      "terminal.integrated.defaultProfile.linux": "zsh"
-    }
-  }
+  "runArgs": ["--name=my-analytics"]
 }
