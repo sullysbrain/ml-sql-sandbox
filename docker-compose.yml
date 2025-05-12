@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  analytics:
+    container_name: my-analytics
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    image: py-analysis
+    volumes:
+      - ./src:/app:cached
+    working_dir: /app
+    tty: true
+    stdin_open: true
