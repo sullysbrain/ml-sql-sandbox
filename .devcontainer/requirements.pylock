@@ -1,0 +1,7 @@
+# requirements.in
+
+# Use Pandas 2.2.0 or higher
+pandas>=2.2.0
+
+# Optional: specify other top-level deps
+# scikit-learn>=1.3

@@ -1,15 +1,15 @@
 {
-  "name": "py-analysis",
+  "name": "exploration",
   "build": {
-    "context": "..",
-    "dockerfile": "Dockerfile"
+    "context": ".",
+    "dockerfile": "Dockerfile.dx"
   },
   // "runArgs": [
   //   "--rm"
   // ],
-  "runArgs": ["--name=my-analytics"],
+  "runArgs": ["--name=exploration"],
   // "workspaceFolder": "/app",
   "mounts": [
-    "source=${localWorkspaceFolder}/src,target=/app,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
   ]
 }
