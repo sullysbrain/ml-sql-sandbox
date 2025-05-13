@@ -7,6 +7,7 @@ services:
     build:
       context: .                                        # folder to use as build context
       dockerfile: .devcontainer/Dockerfile.dx            # Data Exploration
+      target: dev
     image: exploration                                  # name of the built image
     volumes:
       - ./:/app:cached
