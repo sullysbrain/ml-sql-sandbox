@@ -1,14 +1,15 @@
 {
   "name": "exploration",
   "build": {
-    "context": ".",
+    "context": "..",
     "dockerfile": "Dockerfile.dx"
+    // "dockerComposeFile": "docker-compose.yml"
   },
-  // "runArgs": [
+   // "runArgs": [
   //   "--rm"
   // ],
-  "runArgs": ["--name=exploration"],
-  // "workspaceFolder": "/app",
+  // "runArgs": ["--name=exploration"],
+  "workspaceFolder": "/app",
   "mounts": [
     "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
   ]

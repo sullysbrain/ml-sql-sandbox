@@ -11,8 +11,13 @@ uv pip sync pylock.toml
 # up builds, (re)creates, starts, and attaches to containers for a service
 # docker-compose up -d --build
 # -d runs in detached mode
-docker-compose up -d --build exploration
+docker-compose down -v --remove-orphans
+docker system prune -af
+docker-compose build --no-cache
 
+
+docker-compose up -d --build exploration
+docker build --target dev -t my-image:dev .
 
 
 # Run
