@@ -1,0 +1,15 @@
+{
+  "name": "py-data-exploration",
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile"
+  },
+  // "runArgs": [
+  //   "--rm"
+  // ],
+  "runArgs": ["--name=data-exploration"],
+  // "workspaceFolder": "/app",
+  "mounts": [
+    "source=./${localWorkspaceFolder}/src,target=/app,type=bind,consistency=cached"
+  ]
+}

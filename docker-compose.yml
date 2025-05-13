@@ -1,14 +1,16 @@
-version: "3.8"
+# version: "3.8"
+
 
 services:
-  analytics:
-    container_name: my-analytics
+  exploration:
+    container_name: exploration
     build:
-      context: .
-      dockerfile: .devcontainer/Dockerfile
-    image: py-analysis
+      context: .         # folder to use as build context
+      dockerfile: .devcontainer/Dockerfile.dx            # Data Exploration
+    image: exploration            # name of the built image
     volumes:
-      - ./src:/app:cached
+      - ./:/app:cached
     working_dir: /app
     tty: true
     stdin_open: true
+    # command: bash
