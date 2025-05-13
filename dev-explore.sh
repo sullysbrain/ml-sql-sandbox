@@ -13,6 +13,8 @@ uv pip sync pylock.toml
 # -d runs in detached mode
 docker-compose up -d --build exploration
 
+# docker-compose build exploration
+
 # Run
 # -t allocates a pseudo-TTY
 # -i keeps STDIN open even if not attached

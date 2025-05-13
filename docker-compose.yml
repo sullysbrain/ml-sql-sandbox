@@ -5,9 +5,9 @@ services:
   exploration:
     container_name: exploration
     build:
-      context: .         # folder to use as build context
+      context: .                                        # folder to use as build context
       dockerfile: .devcontainer/Dockerfile.dx            # Data Exploration
-    image: exploration            # name of the built image
+    image: exploration                                  # name of the built image
     volumes:
       - ./:/app:cached
     working_dir: /app
