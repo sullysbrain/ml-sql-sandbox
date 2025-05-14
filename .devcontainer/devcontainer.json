@@ -3,14 +3,17 @@
   "build": {
     "context": "..",
     "dockerfile": "Dockerfile.dx"
-    // "dockerComposeFile": "docker-compose.yml"
   },
+  // "workspaceFolder": "/app/src",
+  "workspaceFolder": "/app",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
+}
+
+
    // "runArgs": [
   //   "--rm"
   // ],
   // "runArgs": ["--name=exploration"],
-  "workspaceFolder": "/app",
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
-  ]
-}
+    // "mounts": [
+  //   "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached"
+  // ],

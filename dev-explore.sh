@@ -3,7 +3,7 @@
 # compile the requirements.txt file to a pip-compile compatible format
 uv pip compile requirements.pylock -o pylock.toml
 
-uv pip sync pylock.toml
+uv pip sync pylock.toml --system
 
 
 
@@ -24,3 +24,7 @@ docker build --target dev -t my-image:dev .
 # -t allocates a pseudo-TTY
 # -i keeps STDIN open even if not attached
 docker exec -it exploration sh
+
+
+
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root

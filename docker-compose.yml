@@ -10,8 +10,10 @@ services:
     image: exploration                                  # name of the built image
     volumes:
       - ./:/app:cached
+    # working_dir: /app/src
     working_dir: /app
+    ports:
+      - "8888:8888"
     tty: true
     stdin_open: true
     command: sh
-    # command: bash

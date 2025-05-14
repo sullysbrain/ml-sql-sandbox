@@ -2,6 +2,10 @@
 
 # Use Pandas 2.2.0 or higher
 pandas>=2.2.0
+numpy
+matplotlib
+seaborn
+jupyterlab
 
 # Optional: specify other top-level deps
 # scikit-learn>=1.3

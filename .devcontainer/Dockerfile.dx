@@ -10,7 +10,8 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    UV_PROJECT_ENVIRONMENT=/usr/local
+    UV_PROJECT_ENVIRONMENT=/usr/local\
+    UV_LINK_MODE=copy
     # EDITOR=vim \
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -21,8 +22,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/
 
-# UV Stage
-ENV UV_LINK_MODE=copy
 
 # RUN uv pip sync
 FROM base AS dev
@@ -30,4 +29,10 @@ COPY .devcontainer/requirements.pylock .
 RUN uv pip compile requirements.pylock -o pylock.toml && \
     uv pip sync pylock.toml --system
 
+CMD ["uv", "--version"]
+
+# RUN Jupyter
+# RUN dev AS jupyter
+EXPOSE 8888
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser"]
     
